@@ -5,6 +5,8 @@ import numpy as np
 
 
 def uni_stat_summary(data_model: pd.DataFrame, data_test: pd.DataFrame, column: str) -> None:
+    pd.set_option('display.max_rows', None)
+
     counts_train =  data_model[column].value_counts()
     percentage_train = data_model[column].value_counts(normalize=True)
 
@@ -20,8 +22,8 @@ def uni_stat_summary(data_model: pd.DataFrame, data_test: pd.DataFrame, column: 
     print()
     print(pd.concat(
     [
-        data_model[column].describe(), 
-        data_test[column].describe()
+        data_model[column].describe(include='all'), 
+        data_test[column].describe(include='all')
     ], 
     axis=1,
     keys=['data_model', 'data_test']
@@ -49,4 +51,15 @@ def uni_cat_plot(data_model: pd.DataFrame, data_test: pd.DataFrame,column: str, 
     sns.barplot(x=data_test[column].value_counts().index, y=data_test[column].value_counts().values, color='palegreen', alpha=0.5, ax=axes[0])
     
     fig.legend()
+    plt.show()
+
+def uni_num_plot(data_model: pd.DataFrame, data_test: pd.DataFrame, column: str) -> None:
+    fig, axes = plt.subplots(1, 2, figsize=(12, 8), sharex=False, sharey=False)
+    
+    sns.histplot(data_model[column], kde=True, color='slateblue', alpha=0.5, ax=axes[0])
+    sns.histplot(data_test[column], kde=True, color='palegreen', alpha=0.5, ax=axes[0])
+    
+    sns.boxplot(y=data_model[column], color='slateblue', ax=axes[1])
+    sns.boxplot(y=data_test[column], color='palegreen', ax=axes[1])
+    
     plt.show()
