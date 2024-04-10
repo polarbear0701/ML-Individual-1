@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 def cal_percent(data_model: pd.DataFrame, data_test: pd.DataFrame, target: str, feature: str) -> None:
-    print((data_model.groupby(target)[feature].value_counts() / data_model.groupby(target)[feature].count())*100)
+    print((data_model.groupby(target)[feature].value_counts(ascending=True) / data_model.groupby(target)[feature].count())*100)
 
 def uni_stat_summary(data_model: pd.DataFrame, data_test: pd.DataFrame, column: str) -> None:
     pd.set_option('display.max_rows', None)
